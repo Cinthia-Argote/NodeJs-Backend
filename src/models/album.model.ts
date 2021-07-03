@@ -1,20 +1,10 @@
-import { Optional } from 'sequelize';
 import { Table, Model, Column, HasMany } from 'sequelize-typescript';
 
 import Artist from './artist.model';
-
-interface AlbumAttributes {
-  id: number;
-  releaseDate: Date;
-  rating: number;
-  title: string;
-  year: number;
-}
-
-interface AlbumCreationAttributes extends Optional<AlbumAttributes, 'id'> {}
+import { IAlbumAttributes, IAlbumCreationAttributes } from './interfaces';
 
 @Table
-class Album extends Model <AlbumAttributes, AlbumCreationAttributes> {
+class Album extends Model <IAlbumAttributes, IAlbumCreationAttributes> {
   @Column
   releaseDate!: Date
 

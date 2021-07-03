@@ -1,20 +1,10 @@
-import { Optional } from 'sequelize';
 import { Table, Column, Model, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
-import Album from './album.model'
-
-interface ArtistAttributes {
-  id: number;
-  releaseDate: Date;
-  rating: number;
-  title: string;
-  year: number;
-}
-
-interface ArtistCreationAttributes extends Optional<ArtistAttributes, 'id'> {}
+import Album from './album.model';
+import { IArtistAttributes, IArtistCreationAttributes } from './interfaces';
 
 @Table
-class Artist extends Model <ArtistAttributes, ArtistCreationAttributes> {
+class Artist extends Model <IArtistAttributes, IArtistCreationAttributes> {
   @Column
   firstName!: string
 

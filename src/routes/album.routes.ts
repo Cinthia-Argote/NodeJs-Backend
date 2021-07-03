@@ -14,35 +14,46 @@ albumsRouter.get("/", async (req, res) => {
   }
 });
 
+// get album by id
+albumsRouter.get("/:id", async (req, res) => {
+  try {
+    const { params } = req;
+    const data = await AlbumController.finById(params.id);
+    res.json(data);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
 // post to create a new album
 albumsRouter.post("/", async (req, res) => {
   try {
     const album = await AlbumController.create(req.body);
-    res.status(200).json(album);
+    res.status(201).json(album);
   } catch (error) {
     res.status(400).json({ error });
   }
 });
 
 // put to update allbum
-albumsRouter.put("/:id", async (req, res, next) => {
+albumsRouter.put("/:id", async (req, res) => {
   const { params } = req;
   try {
     await AlbumController.update(req.body, params.id);
     res.sendStatus(200);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    res.status(400).json({ error });
   }
 });
 
 // delete allbum
-albumsRouter.delete("/:id", async (req, res, next) => {
+albumsRouter.delete("/:id", async (req, res) => {
   const { params } = req;
   try {
     await AlbumController.destroy(params.id);
     res.sendStatus(200);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    res.status(400).json({ error });
   }
 });
 
