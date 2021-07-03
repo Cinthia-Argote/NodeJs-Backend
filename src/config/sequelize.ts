@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   username: 'root',
   password: 'root',
-  models: [Album, Artist] // or [Player, Team],
+  models: [Album, Artist],
 });
 
 export default sequelize;
