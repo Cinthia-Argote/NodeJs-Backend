@@ -1,8 +1,13 @@
 import AlbumModel from '../models/album.model';
+import ArtistModel from '../models/artist.model';
 import { IAlbumAttributes } from '../models/interfaces';
 
 const findAll = () => {
-  return AlbumModel.findAll();
+  return AlbumModel.findAll({ include: ArtistModel });
+};
+
+const finById = (id: string) => {
+  return AlbumModel.findByPk(id);
 };
 
 const create = (data: IAlbumAttributes) => {
@@ -17,4 +22,4 @@ const destroy = (id: string) => {
   return AlbumModel.destroy({ where: { id } });
 }
 
-export default { findAll, create, update, destroy };
+export default { create, destroy, findAll, finById, update };
