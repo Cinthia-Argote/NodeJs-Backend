@@ -1,9 +1,9 @@
+import AlbumArtist from '../models/albumArtist.model';
 import ArtistModel from '../models/artist.model';
-import AlbumModel from '../models/album.model';
 import { IArtistAttributes } from '../models/interfaces';
 
 const findAll = () => {
-  return ArtistModel.findAll({ include: AlbumModel });
+  return ArtistModel.scope('albums').findAll();
 };
 
 const finById = (id: string) => {
@@ -22,4 +22,16 @@ const destroy = (id: string) => {
   return ArtistModel.destroy({ where: { id } });
 }
 
-export default { create, destroy, findAll, finById, update };
+const addAlbum = (artistId: string, albumId: string) => {
+  return AlbumArtist.create({
+    artistId, albumId
+  });
+}
+
+const removeAlbum = (artistId: string, albumId: string) => {
+  return AlbumArtist.destroy({ where: {
+    artistId, albumId
+  }});
+}
+
+export default { addAlbum, create, destroy, findAll, finById, removeAlbum, update };
