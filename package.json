@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "tsc && node ./dist/app.js",
     "build": "tsc",
-    "dev:serve": "nodemon --watch './**/*.ts' --exec 'ts-node' ./src/app.ts"
+    "dev:serve": "nodemon --watch './**/*.ts' --exec 'ts-node' ./src/app.ts",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,9 @@
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.14.0",
     "@types/validator": "^13.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.30.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   }
