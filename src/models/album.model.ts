@@ -1,7 +1,24 @@
-import { Table, Model, Column, HasMany } from 'sequelize-typescript';
+import { Table, Model, Column, Scopes, BelongsToMany } from 'sequelize-typescript';
+import AlbumArtist from './albumArtist.model';
 
 import Artist from './artist.model';
 import { IAlbumAttributes, IAlbumCreationAttributes } from './interfaces';
+
+@Scopes(() => ({
+  cast: {
+    include: [{
+      model: Artist,
+      through: {attributes: []},
+    }],
+  },
+
+  full: {
+    include: [{
+      model: Artist,
+      through: {attributes: []},
+    }]
+  }
+}))
 
 @Table
 class Album extends Model <IAlbumAttributes, IAlbumCreationAttributes> {
@@ -17,8 +34,8 @@ class Album extends Model <IAlbumAttributes, IAlbumCreationAttributes> {
   @Column
   year!: number
 
-  @HasMany(() => Artist)
-  Artist!: Artist[]
+  @BelongsToMany(() => Artist, () => AlbumArtist)
+  artists?: Artist[]
 }
 
 export default Album;

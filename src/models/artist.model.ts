@@ -1,7 +1,20 @@
-import { Table, Column, Model, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, Scopes, BelongsToMany } from 'sequelize-typescript';
 
 import Album from './album.model';
+import AlbumArtist from './albumArtist.model';
 import { IArtistAttributes, IArtistCreationAttributes } from './interfaces';
+
+
+@Scopes(() => ({
+  albums: {
+    include: [
+      {
+        model: Album,
+        through: { attributes: [] },
+      },
+    ],
+  },
+}))
 
 @Table
 class Artist extends Model <IArtistAttributes, IArtistCreationAttributes> {
@@ -14,12 +27,8 @@ class Artist extends Model <IArtistAttributes, IArtistCreationAttributes> {
   @Column
   birthDate!: Date
 
-  @ForeignKey(() => Album)
-  @Column
-  albumId?: number
-
-  @BelongsTo(() => Album)
-  album?: Album
+  @BelongsToMany(() => Album, () => AlbumArtist)
+  albums?: Album[];
 }
 
 export default Artist;

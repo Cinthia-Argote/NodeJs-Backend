@@ -29,7 +29,7 @@ albumsRouter.get("/:id", async (req, res) => {
 albumsRouter.post("/", async (req, res) => {
   try {
     const album = await AlbumController.create(req.body);
-    res.status(201).json(album);
+    res.status(200).json(album);
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -39,8 +39,8 @@ albumsRouter.post("/", async (req, res) => {
 albumsRouter.put("/:id", async (req, res) => {
   const { params } = req;
   try {
-    await AlbumController.update(req.body, params.id);
-    res.sendStatus(200);
+    const album = await AlbumController.update(req.body, params.id);
+    res.status(200).json(album);
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -51,7 +51,25 @@ albumsRouter.delete("/:id", async (req, res) => {
   const { params } = req;
   try {
     await AlbumController.destroy(params.id);
-    res.sendStatus(200);
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
+albumsRouter.post('/:id/artists/:artistId', async (req, res, next) => {
+  try {
+    await AlbumController.addArtist(req.params.id, req.params.artistId);
+    res.sendStatus(201);
+  } catch (e) {
+    next(e);
+  }
+});
+
+albumsRouter.delete('/:id/artists/:artistId', async (req, res) => {
+  try {
+    await AlbumController.removeArtist(req.params.id, req.params.artistId);
+    res.sendStatus(201);
   } catch (error) {
     res.status(400).json({ error });
   }
