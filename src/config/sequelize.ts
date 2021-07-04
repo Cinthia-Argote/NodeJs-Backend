@@ -4,10 +4,10 @@ import Artist from '../models/artist.model';
 import AlbumArtist from '../models/albumArtist.model';
 
 const sequelize = new Sequelize({
-  database: 'home_music_db',
+  database: process.env.NAME_DB || 'home_music_db',
   dialect: 'mysql',
-  username: 'root',
-  password: 'root',
+  username: process.env.USERNAME_DB || 'root',
+  password: process.env.PASSWORD_DB || 'root',
   models: [Album, Artist, AlbumArtist],
 });
 
