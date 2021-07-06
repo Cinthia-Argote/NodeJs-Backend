@@ -8,25 +8,25 @@ import artistsRouter from './routes/artist.routes';
 
 const app = express();
 
-// cors: para permitir el acceso a la API desde otro origen(dominio), este caso cualquier dominio.
+// cors: to allow access to the API from another source (domain), in this case any domain.
 app.use(cors());
 
-// json: json parser para parsear los requests al formato json
+// json: json parser to parse requests to json format
 app.use(express.json());
 
-// logger para ver los requests al servicio
+// logger to see the requests to the service
 app.use(morgan("dev"));
 
-// sincronizar la base de datos
+// synchronize the database
 sequelize.sync({ force: false }).then(() => {
   console.log("Drop and re-sync db.");
 });
 
-//"/album" rutas para el manejo de albums
+// album, artist management paths
 app.use("/album", albumsRouter);
 app.use("/artist", artistsRouter);
 
-// inicializacion del servicio para que escuche las peticiones por el API_PORT
+// initialization of the service so that it listens for requests through the API_PORT
 const API_PORT = process.env.PORT || 3000;
 
 app.listen(API_PORT, () => {
